@@ -3,13 +3,13 @@
 #include <zephyr/logging/log.h>
 
 #if defined(CONFIG_LED_SUBSYSTEM)
-#define SLEEP_TIME_MS CONFIG_BLINK_SLEEP_TIME_MS
+#define SLEEP_TIME_MS CONFIG_APP_HEARTBEAT_PERIOD_MS
 #else
-#define SLEEP_TIME_MS 1000
+#define SLEEP_TIME_MS 500
 #endif
 
-/* The devicetree node identifier for the "led0" alias. */
-#define LED_NODE DT_ALIAS(led0)
+/* The devicetree node identifier for the "app_led" alias. */
+#define LED_NODE DT_ALIAS(app_led)
 
 static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED_NODE, gpios);
 
@@ -22,6 +22,9 @@ int main(void)
     if (!gpio_is_ready_dt(&led)) return 0;
 
     if (gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE) < 0) return 0;
+
+    LOG_INF("LED_SUBSYSTEM: %s, SLEEP_TIME_MS: %d ms",
+        IS_ENABLED(CONFIG_LED_SUBSYSTEM) ? "enabled" : "disabled", SLEEP_TIME_MS);
 
     while (1) {
         if (gpio_pin_toggle_dt(&led) < 0) return 0;

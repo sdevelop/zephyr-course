@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 3.20.0)
 
+# Add explicitly app.overlay file to the build.
+# This is required because app already defined esp32c3_042_oled board overlay file.
+if (${BOARD} MATCHES "^esp32c3_042_oled")
+    message(NOTICE "Building for ${BOARD} board, adding app.overlay via EXTRA_DTC_OVERLAY_FILE")
+    set (EXTRA_DTC_OVERLAY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/app.overlay")
+endif()
+
 find_package(Zephyr REQUIRED)
 project(my_zephyr_app)
 

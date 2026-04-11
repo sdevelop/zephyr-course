@@ -13,6 +13,11 @@ menuconfig LED_SUBSYSTEM
 
 if LED_SUBSYSTEM
 
+config APP_HEARTBEAT_PERIOD_MS
+	int "Set heartbeat LED period (ms)"
+	default 500
+	range 100 2000
+
 choice
 	prompt "LED blink sleep time"
 	default BLINK_SLEEP_1000MS
