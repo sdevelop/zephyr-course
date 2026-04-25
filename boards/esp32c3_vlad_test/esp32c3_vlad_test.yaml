@@ -1,5 +1,5 @@
-identifier: esp32c3_042_oled
-name: ESP32C3 0.42 OLED
+identifier: esp32c3_vlad_test
+name: ESP32C3 VLAD TEST (0.42 OLED)
 type: mcu
 arch: riscv
 toolchain:
@@ -11,4 +11,4 @@ supported:
   - spi
   - uart
   - watchdog
-vendor: 01space
+vendor: 01space-sdevelop
