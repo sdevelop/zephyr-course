@@ -8,11 +8,11 @@
 /dts-v1/;
 
 #include <espressif/esp32c3/esp32c3_fx4.dtsi>
-#include "esp32c3_042_oled-pinctrl.dtsi"
+#include "esp32c3_vlad_test-pinctrl.dtsi"
 #include <espressif/partitions_0x0_default.dtsi>
 
 / {
-	model = "01space ESP32C3 0.42 OLED";
+	model = "01space-sdevelop ESP32C3 VLAD TEST (0.42 OLED)";
 
 	chosen {
 		zephyr,sram = &sram1;
@@ -31,6 +31,15 @@
 	};
 
 	/* WS2812B LED connected to GPIO2 */
+
+
+	leds {
+		compatible = "gpio-leds";
+		led0: led_0 {
+			gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>; // GPIO8
+			label = "LED0";
+		};
+	};
 };
 
 /* Have to use uart1 as some tests are hardcoded for that DTS node :/ */

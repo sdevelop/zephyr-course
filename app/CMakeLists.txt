@@ -7,6 +7,7 @@ if (${BOARD} MATCHES "^esp32c3_042_oled")
     set (EXTRA_DTC_OVERLAY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/app.overlay")
 endif()
 
+list(APPEND BOARD_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/..)
 find_package(Zephyr REQUIRED)
 project(my_zephyr_app)
 

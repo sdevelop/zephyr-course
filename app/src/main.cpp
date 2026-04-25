@@ -23,6 +23,7 @@ int main(void)
 
     if (gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE) < 0) return 0;
 
+    LOG_INF("BOARD: %s\n", CONFIG_BOARD);
     LOG_INF("LED_SUBSYSTEM: %s, SLEEP_TIME_MS: %d ms",
         IS_ENABLED(CONFIG_LED_SUBSYSTEM) ? "enabled" : "disabled", SLEEP_TIME_MS);
 
