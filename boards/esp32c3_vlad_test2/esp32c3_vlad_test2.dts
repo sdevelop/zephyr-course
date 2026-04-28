@@ -1,0 +1,38 @@
+/*
+ * Copyright 2022 Google LLC
+ * Copyright 2024 Nordic Semiconductor ASA
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+
+#include <espressif/esp32c3/esp32c3_fx4.dtsi>
+#include <espressif/partitions_0x0_default.dtsi>
+
+/ {
+	model = "sdevelop ESP32C3 VLAD TEST2 (from scratch, based on 0.42 OLED)";
+
+	chosen {
+		zephyr,sram = &sram1;
+		zephyr,console = &usb_serial;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &slot0_partition;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		led0: led_0 {
+			gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>; // GPIO8
+			label = "LED0";
+		};
+	};
+};
+
+&usb_serial {
+	status = "okay";
+};
+
+&gpio0 {
+	status = "okay";
+};

@@ -1,0 +1,4 @@
+# Just a stub for the future usages
+if BOARD_ESP32C3_VLAD_TEST2
+
+endif
