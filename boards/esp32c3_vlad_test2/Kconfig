@@ -1,0 +1,7 @@
+# Required for k_malloc() to work/compile
+config HEAP_MEM_POOL_ADD_SIZE_BOARD
+	int
+	default 4096
+
+config BOARD_ESP32C3_VLAD_TEST2
+	select BOARD_EARLY_INIT_HOOK
