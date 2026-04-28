@@ -1,0 +1,6 @@
+board:
+  name: esp32c3_vlad_test2
+  full_name: ESP32C3 VLAD TEST2 (from scratch, based on 0.42 OLED)
+  vendor: sdevelop
+  socs:
+  - name: esp32c3
