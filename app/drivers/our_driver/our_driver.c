@@ -1,6 +1,7 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/logging/log.h>
+#include <our_driver.h>
 
 #define DT_DRV_COMPAT our_driver
 
@@ -8,6 +9,17 @@ LOG_MODULE_REGISTER(our_driver, LOG_LEVEL_INF);
 
 #define LED_NODE DT_ALIAS(app_led)
 static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED_NODE, gpios);
+
+struct our_driver_data {
+    unsigned long led_toggle_counter;
+};
+
+int our_driver_update_led_toggle_counter(const struct device *dev, unsigned int added_value) {
+    struct our_driver_data *data = (struct our_driver_data *)dev->data;
+    data->led_toggle_counter += added_value;
+    LOG_INF("LED toggle counter updated with %u: new value: %lu", added_value, data->led_toggle_counter);
+    return 0;
+}
 
 static int handle_led_state(bool state) {
 
@@ -56,5 +68,9 @@ static DEVICE_API(sensor, our_driver_api) = {
     .sample_fetch = sample_fetch_my_impl,
 };
 
-#define DEV_INST(inst) DEVICE_DT_INST_DEFINE(inst, our_driver_init, NULL, NULL, NULL, POST_KERNEL, 80, &our_driver_api);
+#define DEV_INST(inst) \
+    static struct our_driver_data ourdrv_data_##inst = { \
+        .led_toggle_counter = 0, \
+    }; \
+    DEVICE_DT_INST_DEFINE(inst, our_driver_init, NULL, &ourdrv_data_##inst, NULL, POST_KERNEL, 80, &our_driver_api);
 DT_INST_FOREACH_STATUS_OKAY(DEV_INST);
