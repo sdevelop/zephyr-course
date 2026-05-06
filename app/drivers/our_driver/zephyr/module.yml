@@ -1,0 +1,7 @@
+name: Our driver module
+
+build:
+  kconfig: ./Kconfig
+  cmake: ./
+  settings:
+    dts_root: ./

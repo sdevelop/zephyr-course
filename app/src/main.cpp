@@ -1,4 +1,5 @@
 #include <zephyr/drivers/gpio.h>
+#include <zephyr/drivers/sensor.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 
@@ -15,11 +16,28 @@ static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED_NODE, gpios);
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
 
+const struct device *dev = DEVICE_DT_GET_ANY(our_driver);
+
 int main(void)
 {
     bool led_state = true;
 
-    if (!gpio_is_ready_dt(&led)) return 0;
+    if (!device_is_ready(dev)) {
+        LOG_ERR("Our driver device is not ready");
+        return -ENODEV;
+    }
+
+    LOG_INF("toggle sleep %d", SLEEP_TIME_MS);
+    k_msleep(3000);
+    while (1) {
+        sensor_sample_fetch(dev);
+        k_msleep(SLEEP_TIME_MS);
+        sensor_channel_get(dev, SENSOR_CHAN_ALL, NULL);
+        k_msleep(5*SLEEP_TIME_MS);
+    }
+
+#if 0
+    if (!gpio_is_ready_dt(&led)) return -ENODEV;
 
     if (gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE) < 0) return 0;
 
@@ -34,5 +52,6 @@ int main(void)
         LOG_INF("LED state: %s", led_state ? "ON" : "OFF");
         k_msleep(SLEEP_TIME_MS);
     }
+#endif
     return 0;
 }
