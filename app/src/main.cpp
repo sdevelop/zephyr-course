@@ -27,7 +27,7 @@ int main(void)
         LOG_ERR("Our driver device is not ready");
         return -ENODEV;
     }
-
+#if 0
     LOG_INF("toggle sleep %d", SLEEP_TIME_MS);
     k_msleep(3000);
     while (1) {
@@ -38,7 +38,7 @@ int main(void)
         k_msleep(5*SLEEP_TIME_MS);
     }
 
-#if 0
+
     if (!gpio_is_ready_dt(&led)) return -ENODEV;
 
     if (gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE) < 0) return 0;

@@ -37,6 +37,10 @@ static int channel_get_my_impl(const struct device *dev,
 
     handle_led_state(false); /* Turning off LED */
     LOG_INF("%s - led OFF", __func__);
+    if (val) {
+        val->val1 = 42; /* Just a dummy value for demonstration */
+        val->val2 = 0;
+    }
     return 0;
 }
 
