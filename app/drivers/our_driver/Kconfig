@@ -1,3 +1,7 @@
 config OUR_DRIVER
     bool "Our Driver"
     default y
+
+config OUR_DRIVER_SHELL
+    bool "Our Driver shell support"
+    select SHELL
